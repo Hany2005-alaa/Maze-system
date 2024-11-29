@@ -1,0 +1,1192 @@
+
+code GEASS.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000672  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000138  00800060  00000672  000006e6  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000081e  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000850  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000040  00000000  00000000  0000088c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00001468  00000000  00000000  000008cc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000630  00000000  00000000  00001d34  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000089f  00000000  00000000  00002364  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000070  00000000  00000000  00002c04  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000345  00000000  00000000  00002c74  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000820  00000000  00000000  00002fb9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000030  00000000  00000000  000037d9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	11 e0       	ldi	r17, 0x01	; 1
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e2 e7       	ldi	r30, 0x72	; 114
+  68:	f6 e0       	ldi	r31, 0x06	; 6
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	a8 39       	cpi	r26, 0x98	; 152
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+  76:	0e 94 6c 00 	call	0xd8	; 0xd8 <main>
+  7a:	0c 94 37 03 	jmp	0x66e	; 0x66e <_exit>
+
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000082 <command>:
+
+
+#include <util/delay.h>
+#include <avr/io.h>
+void command(unsigned char cmd){//these functions are related to lcd intialization
+	PORTC=0x02;
+  82:	92 e0       	ldi	r25, 0x02	; 2
+  84:	95 bb       	out	0x15, r25	; 21
+	PORTD=cmd;
+  86:	82 bb       	out	0x12, r24	; 18
+	PORTC=0x00;
+  88:	15 ba       	out	0x15, r1	; 21
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  8a:	85 ea       	ldi	r24, 0xA5	; 165
+  8c:	9e e0       	ldi	r25, 0x0E	; 14
+  8e:	01 97       	sbiw	r24, 0x01	; 1
+  90:	f1 f7       	brne	.-4      	; 0x8e <command+0xc>
+  92:	00 c0       	rjmp	.+0      	; 0x94 <command+0x12>
+  94:	00 00       	nop
+  96:	08 95       	ret
+
+00000098 <lcd_data>:
+_delay_ms(15);	}
+void lcd_data(unsigned char data){
+	PORTC=0x03;
+  98:	93 e0       	ldi	r25, 0x03	; 3
+  9a:	95 bb       	out	0x15, r25	; 21
+	PORTD=data;
+  9c:	82 bb       	out	0x12, r24	; 18
+	PORTC=0x01;
+  9e:	81 e0       	ldi	r24, 0x01	; 1
+  a0:	85 bb       	out	0x15, r24	; 21
+  a2:	85 ea       	ldi	r24, 0xA5	; 165
+  a4:	9e e0       	ldi	r25, 0x0E	; 14
+  a6:	01 97       	sbiw	r24, 0x01	; 1
+  a8:	f1 f7       	brne	.-4      	; 0xa6 <lcd_data+0xe>
+  aa:	00 c0       	rjmp	.+0      	; 0xac <lcd_data+0x14>
+  ac:	00 00       	nop
+  ae:	08 95       	ret
+
+000000b0 <lcd_print>:
+_delay_ms(15);	}
+
+void lcd_print(char *p){
+  b0:	cf 93       	push	r28
+  b2:	df 93       	push	r29
+  b4:	ec 01       	movw	r28, r24
+	while(*p){
+  b6:	03 c0       	rjmp	.+6      	; 0xbe <lcd_print+0xe>
+	lcd_data(*p++);}}
+  b8:	21 96       	adiw	r28, 0x01	; 1
+  ba:	0e 94 4c 00 	call	0x98	; 0x98 <lcd_data>
+	PORTD=data;
+	PORTC=0x01;
+_delay_ms(15);	}
+
+void lcd_print(char *p){
+	while(*p){
+  be:	88 81       	ld	r24, Y
+  c0:	81 11       	cpse	r24, r1
+  c2:	fa cf       	rjmp	.-12     	; 0xb8 <lcd_print+0x8>
+	lcd_data(*p++);}}
+  c4:	df 91       	pop	r29
+  c6:	cf 91       	pop	r28
+  c8:	08 95       	ret
+
+000000ca <lockdoors>:
+	
+	
+	
+	void lockdoors(){   //function to close all doors in case presence of more than player
+		PORTB&=~(1<<6)&~(1<<7);//these pins connected to servo motors /leds and it will turned off in case of presence more than one player
+  ca:	88 b3       	in	r24, 0x18	; 24
+  cc:	8f 73       	andi	r24, 0x3F	; 63
+  ce:	88 bb       	out	0x18, r24	; 24
+		PORTA&=~(1<<4)&~(1<<5)&~(1<<6)&~(1<<7);
+  d0:	8b b3       	in	r24, 0x1b	; 27
+  d2:	8f 70       	andi	r24, 0x0F	; 15
+  d4:	8b bb       	out	0x1b, r24	; 27
+  d6:	08 95       	ret
+
+000000d8 <main>:
+	
+	
+
+	int main(void)
+	{
+		DDRC=0xFF; //This register is used to select the RS and RW pins
+  d8:	8f ef       	ldi	r24, 0xFF	; 255
+  da:	84 bb       	out	0x14, r24	; 20
+		DDRD=0xFF;//this register for lcd data 
+  dc:	81 bb       	out	0x11, r24	; 17
+		DDRB=0b11000000;//PB6 and PB7 output for leds...remaining bits for switches by which indicate presence of player or not 
+  de:	80 ec       	ldi	r24, 0xC0	; 192
+  e0:	87 bb       	out	0x17, r24	; 23
+		PORTB=0b00000000;
+  e2:	18 ba       	out	0x18, r1	; 24
+		DDRA=0b11110000;//first 4 bits for remaining leds ...second 4 bits for switches by whic i enter the answers of questions
+  e4:	80 ef       	ldi	r24, 0xF0	; 240
+  e6:	8a bb       	out	0x1a, r24	; 26
+		PORTA=0b00000000;
+  e8:	1b ba       	out	0x1b, r1	; 27
+		uint8_t attempts=0;
+		uint8_t door=1;
+		command(0x38); //activiation 2 lines in 8 bit mode
+  ea:	88 e3       	ldi	r24, 0x38	; 56
+  ec:	0e 94 41 00 	call	0x82	; 0x82 <command>
+		command(0x0F); //Display is on cursor is blinking
+  f0:	8f e0       	ldi	r24, 0x0F	; 15
+  f2:	0e 94 41 00 	call	0x82	; 0x82 <command>
+		command(0x01);//clearing display
+  f6:	81 e0       	ldi	r24, 0x01	; 1
+  f8:	0e 94 41 00 	call	0x82	; 0x82 <command>
+		DDRB=0b11000000;//PB6 and PB7 output for leds...remaining bits for switches by which indicate presence of player or not 
+		PORTB=0b00000000;
+		DDRA=0b11110000;//first 4 bits for remaining leds ...second 4 bits for switches by whic i enter the answers of questions
+		PORTA=0b00000000;
+		uint8_t attempts=0;
+		uint8_t door=1;
+  fc:	c1 e0       	ldi	r28, 0x01	; 1
+		DDRD=0xFF;//this register for lcd data 
+		DDRB=0b11000000;//PB6 and PB7 output for leds...remaining bits for switches by which indicate presence of player or not 
+		PORTB=0b00000000;
+		DDRA=0b11110000;//first 4 bits for remaining leds ...second 4 bits for switches by whic i enter the answers of questions
+		PORTA=0b00000000;
+		uint8_t attempts=0;
+  fe:	d0 e0       	ldi	r29, 0x00	; 0
+ 100:	6b c0       	rjmp	.+214    	; 0x1d8 <main+0x100>
+		command(0x01);//clearing display
+		
+		while(1){
+			
+	while(door==1){//all things related to door1....start of maze
+				    if(PINB & (1<<0)){//if the related switch is press indicating to presence of object then display the related question
+ 102:	b0 9b       	sbis	0x16, 0	; 22
+ 104:	69 c0       	rjmp	.+210    	; 0x1d8 <main+0x100>
+					command(0x80);//force cursor to first line first position
+ 106:	80 e8       	ldi	r24, 0x80	; 128
+ 108:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					lcd_print("Q1) 2 + 2 =");
+ 10c:	80 e6       	ldi	r24, 0x60	; 96
+ 10e:	90 e0       	ldi	r25, 0x00	; 0
+ 110:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+ 114:	2f e3       	ldi	r18, 0x3F	; 63
+ 116:	8d e0       	ldi	r24, 0x0D	; 13
+ 118:	93 e0       	ldi	r25, 0x03	; 3
+ 11a:	21 50       	subi	r18, 0x01	; 1
+ 11c:	80 40       	sbci	r24, 0x00	; 0
+ 11e:	90 40       	sbci	r25, 0x00	; 0
+ 120:	e1 f7       	brne	.-8      	; 0x11a <main+0x42>
+ 122:	00 c0       	rjmp	.+0      	; 0x124 <main+0x4c>
+ 124:	00 00       	nop
+					_delay_ms(1000);
+					command(0xC0);//force cursor to second line first position
+ 126:	80 ec       	ldi	r24, 0xC0	; 192
+ 128:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					lcd_print("1)2 2)3 3)4 4)5");
+ 12c:	8c e6       	ldi	r24, 0x6C	; 108
+ 12e:	90 e0       	ldi	r25, 0x00	; 0
+ 130:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+					while(door==1){
+ 134:	4e c0       	rjmp	.+156    	; 0x1d2 <main+0xfa>
+					if(PINA & (1<<2)){//if i enter the correct answer 
+ 136:	ca 9b       	sbis	0x19, 2	; 25
+ 138:	22 c0       	rjmp	.+68     	; 0x17e <main+0xa6>
+					command(0x01);
+ 13a:	81 e0       	ldi	r24, 0x01	; 1
+ 13c:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					command(0x80);
+ 140:	80 e8       	ldi	r24, 0x80	; 128
+ 142:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					lcd_print("correct answer");
+ 146:	8c e7       	ldi	r24, 0x7C	; 124
+ 148:	90 e0       	ldi	r25, 0x00	; 0
+ 14a:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+					command(0xC0);
+ 14e:	80 ec       	ldi	r24, 0xC0	; 192
+ 150:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					lcd_print("opendoors 1");//displaying the open doors
+ 154:	8b e8       	ldi	r24, 0x8B	; 139
+ 156:	90 e0       	ldi	r25, 0x00	; 0
+ 158:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+					door++;//increment doors to move to the second door
+ 15c:	cf 5f       	subi	r28, 0xFF	; 255
+					PORTB|=(1<<6);//related led to door1 is turned on (servo motor)
+ 15e:	88 b3       	in	r24, 0x18	; 24
+ 160:	80 64       	ori	r24, 0x40	; 64
+ 162:	88 bb       	out	0x18, r24	; 24
+ 164:	2f e7       	ldi	r18, 0x7F	; 127
+ 166:	8a e1       	ldi	r24, 0x1A	; 26
+ 168:	96 e0       	ldi	r25, 0x06	; 6
+ 16a:	21 50       	subi	r18, 0x01	; 1
+ 16c:	80 40       	sbci	r24, 0x00	; 0
+ 16e:	90 40       	sbci	r25, 0x00	; 0
+ 170:	e1 f7       	brne	.-8      	; 0x16a <main+0x92>
+ 172:	00 c0       	rjmp	.+0      	; 0x174 <main+0x9c>
+ 174:	00 00       	nop
+					_delay_ms(2000);
+					command(0x01);}
+ 176:	81 e0       	ldi	r24, 0x01	; 1
+ 178:	0e 94 41 00 	call	0x82	; 0x82 <command>
+ 17c:	2a c0       	rjmp	.+84     	; 0x1d2 <main+0xfa>
+					else if (PINA & (1<<0)||PINA & (1<<3) ||PINA & (1<<1)) {//in case entering wrong answers
+ 17e:	c8 99       	sbic	0x19, 0	; 25
+ 180:	04 c0       	rjmp	.+8      	; 0x18a <main+0xb2>
+ 182:	cb 99       	sbic	0x19, 3	; 25
+ 184:	02 c0       	rjmp	.+4      	; 0x18a <main+0xb2>
+ 186:	c9 9b       	sbis	0x19, 1	; 25
+ 188:	24 c0       	rjmp	.+72     	; 0x1d2 <main+0xfa>
+					attempts++;
+ 18a:	df 5f       	subi	r29, 0xFF	; 255
+					if(attempts >=3){//in case the attempts exceed the 3 then end the maze and leds turn off and back to the start of maze as in code
+ 18c:	d3 30       	cpi	r29, 0x03	; 3
+ 18e:	20 f1       	brcs	.+72     	; 0x1d8 <main+0x100>
+					lockdoors();
+ 190:	0e 94 65 00 	call	0xca	; 0xca <lockdoors>
+					command(0x01);
+ 194:	81 e0       	ldi	r24, 0x01	; 1
+ 196:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					command(0x80);
+ 19a:	80 e8       	ldi	r24, 0x80	; 128
+ 19c:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					lcd_print("Failed go to ");
+ 1a0:	87 e9       	ldi	r24, 0x97	; 151
+ 1a2:	90 e0       	ldi	r25, 0x00	; 0
+ 1a4:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+					command(0xC0);
+ 1a8:	80 ec       	ldi	r24, 0xC0	; 192
+ 1aa:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					lcd_print("start of maze");
+ 1ae:	85 ea       	ldi	r24, 0xA5	; 165
+ 1b0:	90 e0       	ldi	r25, 0x00	; 0
+ 1b2:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+ 1b6:	2f e3       	ldi	r18, 0x3F	; 63
+ 1b8:	8d e0       	ldi	r24, 0x0D	; 13
+ 1ba:	93 e0       	ldi	r25, 0x03	; 3
+ 1bc:	21 50       	subi	r18, 0x01	; 1
+ 1be:	80 40       	sbci	r24, 0x00	; 0
+ 1c0:	90 40       	sbci	r25, 0x00	; 0
+ 1c2:	e1 f7       	brne	.-8      	; 0x1bc <main+0xe4>
+ 1c4:	00 c0       	rjmp	.+0      	; 0x1c6 <main+0xee>
+ 1c6:	00 00       	nop
+					_delay_ms(1000);
+					command(0x01);
+ 1c8:	81 e0       	ldi	r24, 0x01	; 1
+ 1ca:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					attempts=0;
+ 1ce:	d0 e0       	ldi	r29, 0x00	; 0
+					break;}
+ 1d0:	03 c0       	rjmp	.+6      	; 0x1d8 <main+0x100>
+					command(0x80);//force cursor to first line first position
+					lcd_print("Q1) 2 + 2 =");
+					_delay_ms(1000);
+					command(0xC0);//force cursor to second line first position
+					lcd_print("1)2 2)3 3)4 4)5");
+					while(door==1){
+ 1d2:	c1 30       	cpi	r28, 0x01	; 1
+ 1d4:	09 f4       	brne	.+2      	; 0x1d8 <main+0x100>
+ 1d6:	af cf       	rjmp	.-162    	; 0x136 <main+0x5e>
+		command(0x0F); //Display is on cursor is blinking
+		command(0x01);//clearing display
+		
+		while(1){
+			
+	while(door==1){//all things related to door1....start of maze
+ 1d8:	c1 30       	cpi	r28, 0x01	; 1
+ 1da:	09 f0       	breq	.+2      	; 0x1de <main+0x106>
+ 1dc:	6e c0       	rjmp	.+220    	; 0x2ba <main+0x1e2>
+ 1de:	91 cf       	rjmp	.-222    	; 0x102 <main+0x2a>
+						break;
+							}	}}	}	}
+							
+
+while(door==2){//all things related to door2
+			   	if(PINB & (1<<1)){//if the related switch is press indicating to presence of object then display the related question
+ 1e0:	b1 9b       	sbis	0x16, 1	; 22
+ 1e2:	6b c0       	rjmp	.+214    	; 0x2ba <main+0x1e2>
+				command(0x80);//force cursor to first line first position
+ 1e4:	80 e8       	ldi	r24, 0x80	; 128
+ 1e6:	0e 94 41 00 	call	0x82	; 0x82 <command>
+				lcd_print("Q2) 2 * 3 =");
+ 1ea:	83 eb       	ldi	r24, 0xB3	; 179
+ 1ec:	90 e0       	ldi	r25, 0x00	; 0
+ 1ee:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+ 1f2:	2f e3       	ldi	r18, 0x3F	; 63
+ 1f4:	8d e0       	ldi	r24, 0x0D	; 13
+ 1f6:	93 e0       	ldi	r25, 0x03	; 3
+ 1f8:	21 50       	subi	r18, 0x01	; 1
+ 1fa:	80 40       	sbci	r24, 0x00	; 0
+ 1fc:	90 40       	sbci	r25, 0x00	; 0
+ 1fe:	e1 f7       	brne	.-8      	; 0x1f8 <main+0x120>
+ 200:	00 c0       	rjmp	.+0      	; 0x202 <main+0x12a>
+ 202:	00 00       	nop
+				_delay_ms(1000);
+				command(0xC0);//force cursor to second line first position
+ 204:	80 ec       	ldi	r24, 0xC0	; 192
+ 206:	0e 94 41 00 	call	0x82	; 0x82 <command>
+				lcd_print("1)6 2)3 3)4 4)5");
+ 20a:	8f eb       	ldi	r24, 0xBF	; 191
+ 20c:	90 e0       	ldi	r25, 0x00	; 0
+ 20e:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+				while(door==2){
+ 212:	50 c0       	rjmp	.+160    	; 0x2b4 <main+0x1dc>
+				if(PINA & (1<<0)){//if i enter the correct answer 
+ 214:	c8 9b       	sbis	0x19, 0	; 25
+ 216:	23 c0       	rjmp	.+70     	; 0x25e <main+0x186>
+				command(0x01);
+ 218:	81 e0       	ldi	r24, 0x01	; 1
+ 21a:	0e 94 41 00 	call	0x82	; 0x82 <command>
+				command(0x80);
+ 21e:	80 e8       	ldi	r24, 0x80	; 128
+ 220:	0e 94 41 00 	call	0x82	; 0x82 <command>
+				lcd_print("correct answer");
+ 224:	8c e7       	ldi	r24, 0x7C	; 124
+ 226:	90 e0       	ldi	r25, 0x00	; 0
+ 228:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+				command(0xC0);
+ 22c:	80 ec       	ldi	r24, 0xC0	; 192
+ 22e:	0e 94 41 00 	call	0x82	; 0x82 <command>
+				lcd_print("opendoors 2");//displaying the open doors
+ 232:	8f ec       	ldi	r24, 0xCF	; 207
+ 234:	90 e0       	ldi	r25, 0x00	; 0
+ 236:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+				attempts=0;
+			    PORTB|=(1<<7);//related led to door2 is turned on (servo motor)
+ 23a:	88 b3       	in	r24, 0x18	; 24
+ 23c:	80 68       	ori	r24, 0x80	; 128
+ 23e:	88 bb       	out	0x18, r24	; 24
+ 240:	2f e7       	ldi	r18, 0x7F	; 127
+ 242:	8a e1       	ldi	r24, 0x1A	; 26
+ 244:	96 e0       	ldi	r25, 0x06	; 6
+ 246:	21 50       	subi	r18, 0x01	; 1
+ 248:	80 40       	sbci	r24, 0x00	; 0
+ 24a:	90 40       	sbci	r25, 0x00	; 0
+ 24c:	e1 f7       	brne	.-8      	; 0x246 <main+0x16e>
+ 24e:	00 c0       	rjmp	.+0      	; 0x250 <main+0x178>
+ 250:	00 00       	nop
+				_delay_ms(2000);
+				command(0x01);
+ 252:	81 e0       	ldi	r24, 0x01	; 1
+ 254:	0e 94 41 00 	call	0x82	; 0x82 <command>
+				
+				door++; //increment doors to move to the second door
+ 258:	cf 5f       	subi	r28, 0xFF	; 255
+				command(0x01);
+				command(0x80);
+				lcd_print("correct answer");
+				command(0xC0);
+				lcd_print("opendoors 2");//displaying the open doors
+				attempts=0;
+ 25a:	d0 e0       	ldi	r29, 0x00	; 0
+ 25c:	2b c0       	rjmp	.+86     	; 0x2b4 <main+0x1dc>
+				_delay_ms(2000);
+				command(0x01);
+				
+				door++; //increment doors to move to the second door
+				}
+				else if (PINA & (1<<2)||PINA & (1<<3)||PINA& (1<<1)) {//in case entering wrong answers
+ 25e:	ca 99       	sbic	0x19, 2	; 25
+ 260:	04 c0       	rjmp	.+8      	; 0x26a <main+0x192>
+ 262:	cb 99       	sbic	0x19, 3	; 25
+ 264:	02 c0       	rjmp	.+4      	; 0x26a <main+0x192>
+ 266:	c9 9b       	sbis	0x19, 1	; 25
+ 268:	25 c0       	rjmp	.+74     	; 0x2b4 <main+0x1dc>
+				attempts++;
+ 26a:	df 5f       	subi	r29, 0xFF	; 255
+				if(attempts >=3){//in case the attempts exceed the 3 then end the maze and leds turn off and back to the start of maze as in code
+ 26c:	d3 30       	cpi	r29, 0x03	; 3
+ 26e:	28 f1       	brcs	.+74     	; 0x2ba <main+0x1e2>
+				lockdoors();
+ 270:	0e 94 65 00 	call	0xca	; 0xca <lockdoors>
+				command(0x01);
+ 274:	81 e0       	ldi	r24, 0x01	; 1
+ 276:	0e 94 41 00 	call	0x82	; 0x82 <command>
+			    command(0x80);
+ 27a:	80 e8       	ldi	r24, 0x80	; 128
+ 27c:	0e 94 41 00 	call	0x82	; 0x82 <command>
+												
+		     	lcd_print("Failed go to ");
+ 280:	87 e9       	ldi	r24, 0x97	; 151
+ 282:	90 e0       	ldi	r25, 0x00	; 0
+ 284:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+				command(0xC0);
+ 288:	80 ec       	ldi	r24, 0xC0	; 192
+ 28a:	0e 94 41 00 	call	0x82	; 0x82 <command>
+			    lcd_print("start of maze");
+ 28e:	85 ea       	ldi	r24, 0xA5	; 165
+ 290:	90 e0       	ldi	r25, 0x00	; 0
+ 292:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+ 296:	2f e3       	ldi	r18, 0x3F	; 63
+ 298:	8d e0       	ldi	r24, 0x0D	; 13
+ 29a:	93 e0       	ldi	r25, 0x03	; 3
+ 29c:	21 50       	subi	r18, 0x01	; 1
+ 29e:	80 40       	sbci	r24, 0x00	; 0
+ 2a0:	90 40       	sbci	r25, 0x00	; 0
+ 2a2:	e1 f7       	brne	.-8      	; 0x29c <main+0x1c4>
+ 2a4:	00 c0       	rjmp	.+0      	; 0x2a6 <main+0x1ce>
+ 2a6:	00 00       	nop
+				_delay_ms(1000);
+				command(0x01);
+ 2a8:	81 e0       	ldi	r24, 0x01	; 1
+ 2aa:	0e 94 41 00 	call	0x82	; 0x82 <command>
+				attempts=0;
+				door=1;
+ 2ae:	c1 e0       	ldi	r28, 0x01	; 1
+		     	lcd_print("Failed go to ");
+				command(0xC0);
+			    lcd_print("start of maze");
+				_delay_ms(1000);
+				command(0x01);
+				attempts=0;
+ 2b0:	d0 e0       	ldi	r29, 0x00	; 0
+				door=1;
+				break;}
+ 2b2:	03 c0       	rjmp	.+6      	; 0x2ba <main+0x1e2>
+				command(0x80);//force cursor to first line first position
+				lcd_print("Q2) 2 * 3 =");
+				_delay_ms(1000);
+				command(0xC0);//force cursor to second line first position
+				lcd_print("1)6 2)3 3)4 4)5");
+				while(door==2){
+ 2b4:	c2 30       	cpi	r28, 0x02	; 2
+ 2b6:	09 f4       	brne	.+2      	; 0x2ba <main+0x1e2>
+ 2b8:	ad cf       	rjmp	.-166    	; 0x214 <main+0x13c>
+					else{
+						break;
+							}	}}	}	}
+							
+
+while(door==2){//all things related to door2
+ 2ba:	c2 30       	cpi	r28, 0x02	; 2
+ 2bc:	09 f4       	brne	.+2      	; 0x2c0 <main+0x1e8>
+ 2be:	90 cf       	rjmp	.-224    	; 0x1e0 <main+0x108>
+ 2c0:	6d c0       	rjmp	.+218    	; 0x39c <main+0x2c4>
+				break;
+			     	}	}}	}	}
+									
+						  
+while(door==3){//all things related to door3
+      	if(PINB & (1<<2)){//if the related switch is press indicating to presence of object then display the related question
+ 2c2:	b2 9b       	sbis	0x16, 2	; 22
+ 2c4:	6b c0       	rjmp	.+214    	; 0x39c <main+0x2c4>
+		command(0x80);//force cursor to first line first position
+ 2c6:	80 e8       	ldi	r24, 0x80	; 128
+ 2c8:	0e 94 41 00 	call	0x82	; 0x82 <command>
+		lcd_print("Q3) 4 - 1 =");
+ 2cc:	8b ed       	ldi	r24, 0xDB	; 219
+ 2ce:	90 e0       	ldi	r25, 0x00	; 0
+ 2d0:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+ 2d4:	2f e3       	ldi	r18, 0x3F	; 63
+ 2d6:	8d e0       	ldi	r24, 0x0D	; 13
+ 2d8:	93 e0       	ldi	r25, 0x03	; 3
+ 2da:	21 50       	subi	r18, 0x01	; 1
+ 2dc:	80 40       	sbci	r24, 0x00	; 0
+ 2de:	90 40       	sbci	r25, 0x00	; 0
+ 2e0:	e1 f7       	brne	.-8      	; 0x2da <main+0x202>
+ 2e2:	00 c0       	rjmp	.+0      	; 0x2e4 <main+0x20c>
+ 2e4:	00 00       	nop
+		_delay_ms(1000);
+		command(0xC0);//force cursor to second line first position
+ 2e6:	80 ec       	ldi	r24, 0xC0	; 192
+ 2e8:	0e 94 41 00 	call	0x82	; 0x82 <command>
+		lcd_print("1)6 2)4 3)2 4)3");
+ 2ec:	87 ee       	ldi	r24, 0xE7	; 231
+ 2ee:	90 e0       	ldi	r25, 0x00	; 0
+ 2f0:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+		while(door==3){
+ 2f4:	50 c0       	rjmp	.+160    	; 0x396 <main+0x2be>
+			if(PINA & (1<<3)){//if i enter the correct answer 
+ 2f6:	cb 9b       	sbis	0x19, 3	; 25
+ 2f8:	23 c0       	rjmp	.+70     	; 0x340 <main+0x268>
+				command(0x01);
+ 2fa:	81 e0       	ldi	r24, 0x01	; 1
+ 2fc:	0e 94 41 00 	call	0x82	; 0x82 <command>
+				command(0x80);
+ 300:	80 e8       	ldi	r24, 0x80	; 128
+ 302:	0e 94 41 00 	call	0x82	; 0x82 <command>
+				lcd_print("correct answer");
+ 306:	8c e7       	ldi	r24, 0x7C	; 124
+ 308:	90 e0       	ldi	r25, 0x00	; 0
+ 30a:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+				command(0xC0);
+ 30e:	80 ec       	ldi	r24, 0xC0	; 192
+ 310:	0e 94 41 00 	call	0x82	; 0x82 <command>
+				lcd_print("opendoors 3");//displaying the open doors
+ 314:	87 ef       	ldi	r24, 0xF7	; 247
+ 316:	90 e0       	ldi	r25, 0x00	; 0
+ 318:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+				
+				attempts=0;
+				PORTA|=(1<<4);//related led to door3 is turned on (servo motor)
+ 31c:	8b b3       	in	r24, 0x1b	; 27
+ 31e:	80 61       	ori	r24, 0x10	; 16
+ 320:	8b bb       	out	0x1b, r24	; 27
+ 322:	2f e7       	ldi	r18, 0x7F	; 127
+ 324:	8a e1       	ldi	r24, 0x1A	; 26
+ 326:	96 e0       	ldi	r25, 0x06	; 6
+ 328:	21 50       	subi	r18, 0x01	; 1
+ 32a:	80 40       	sbci	r24, 0x00	; 0
+ 32c:	90 40       	sbci	r25, 0x00	; 0
+ 32e:	e1 f7       	brne	.-8      	; 0x328 <main+0x250>
+ 330:	00 c0       	rjmp	.+0      	; 0x332 <main+0x25a>
+ 332:	00 00       	nop
+				_delay_ms(2000);
+				
+				command(0x01);
+ 334:	81 e0       	ldi	r24, 0x01	; 1
+ 336:	0e 94 41 00 	call	0x82	; 0x82 <command>
+				
+				door++;//increment doors to move to the second door
+ 33a:	cf 5f       	subi	r28, 0xFF	; 255
+				command(0x80);
+				lcd_print("correct answer");
+				command(0xC0);
+				lcd_print("opendoors 3");//displaying the open doors
+				
+				attempts=0;
+ 33c:	d0 e0       	ldi	r29, 0x00	; 0
+ 33e:	2b c0       	rjmp	.+86     	; 0x396 <main+0x2be>
+				door++;//increment doors to move to the second door
+				
+				
+				
+			}
+			else if (PINA & (1<<1) ||PINA & (1<<2)||PINA & (1<<0)) {//in case entering wrong answers
+ 340:	c9 99       	sbic	0x19, 1	; 25
+ 342:	04 c0       	rjmp	.+8      	; 0x34c <main+0x274>
+ 344:	ca 99       	sbic	0x19, 2	; 25
+ 346:	02 c0       	rjmp	.+4      	; 0x34c <main+0x274>
+ 348:	c8 9b       	sbis	0x19, 0	; 25
+ 34a:	25 c0       	rjmp	.+74     	; 0x396 <main+0x2be>
+				attempts++;
+ 34c:	df 5f       	subi	r29, 0xFF	; 255
+				if(attempts >=3){//in case the attempts exceed the 3 then end the maze and leds turn off and back to the start of maze as in code
+ 34e:	d3 30       	cpi	r29, 0x03	; 3
+ 350:	28 f1       	brcs	.+74     	; 0x39c <main+0x2c4>
+					lockdoors();
+ 352:	0e 94 65 00 	call	0xca	; 0xca <lockdoors>
+					command(0x01);
+ 356:	81 e0       	ldi	r24, 0x01	; 1
+ 358:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					command(0x80);
+ 35c:	80 e8       	ldi	r24, 0x80	; 128
+ 35e:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					
+					lcd_print("Failed go to ");
+ 362:	87 e9       	ldi	r24, 0x97	; 151
+ 364:	90 e0       	ldi	r25, 0x00	; 0
+ 366:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+					command(0xC0);
+ 36a:	80 ec       	ldi	r24, 0xC0	; 192
+ 36c:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					lcd_print("start of maze");
+ 370:	85 ea       	ldi	r24, 0xA5	; 165
+ 372:	90 e0       	ldi	r25, 0x00	; 0
+ 374:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+ 378:	2f e3       	ldi	r18, 0x3F	; 63
+ 37a:	8d e0       	ldi	r24, 0x0D	; 13
+ 37c:	93 e0       	ldi	r25, 0x03	; 3
+ 37e:	21 50       	subi	r18, 0x01	; 1
+ 380:	80 40       	sbci	r24, 0x00	; 0
+ 382:	90 40       	sbci	r25, 0x00	; 0
+ 384:	e1 f7       	brne	.-8      	; 0x37e <main+0x2a6>
+ 386:	00 c0       	rjmp	.+0      	; 0x388 <main+0x2b0>
+ 388:	00 00       	nop
+					_delay_ms(1000);
+					command(0x01);
+ 38a:	81 e0       	ldi	r24, 0x01	; 1
+ 38c:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					door=1;
+ 390:	c1 e0       	ldi	r28, 0x01	; 1
+					attempts=0;
+ 392:	d0 e0       	ldi	r29, 0x00	; 0
+				break;}
+ 394:	03 c0       	rjmp	.+6      	; 0x39c <main+0x2c4>
+		command(0x80);//force cursor to first line first position
+		lcd_print("Q3) 4 - 1 =");
+		_delay_ms(1000);
+		command(0xC0);//force cursor to second line first position
+		lcd_print("1)6 2)4 3)2 4)3");
+		while(door==3){
+ 396:	c3 30       	cpi	r28, 0x03	; 3
+ 398:	09 f4       	brne	.+2      	; 0x39c <main+0x2c4>
+ 39a:	ad cf       	rjmp	.-166    	; 0x2f6 <main+0x21e>
+				else{
+				break;
+			     	}	}}	}	}
+									
+						  
+while(door==3){//all things related to door3
+ 39c:	c3 30       	cpi	r28, 0x03	; 3
+ 39e:	09 f4       	brne	.+2      	; 0x3a2 <main+0x2ca>
+ 3a0:	90 cf       	rjmp	.-224    	; 0x2c2 <main+0x1ea>
+ 3a2:	6d c0       	rjmp	.+218    	; 0x47e <__EEPROM_REGION_LENGTH__+0x7e>
+														
+															
+															
+while(door==4){//all things related to door4
+																
+				if(PINB & (1<<3)){//if the related switch is press indicating to presence of object then display the related question
+ 3a4:	b3 9b       	sbis	0x16, 3	; 22
+ 3a6:	6b c0       	rjmp	.+214    	; 0x47e <__EEPROM_REGION_LENGTH__+0x7e>
+					command(0x80);//force cursor to first line first position
+ 3a8:	80 e8       	ldi	r24, 0x80	; 128
+ 3aa:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					lcd_print("Q4) 9 / 3 =");
+ 3ae:	83 e0       	ldi	r24, 0x03	; 3
+ 3b0:	91 e0       	ldi	r25, 0x01	; 1
+ 3b2:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+ 3b6:	2f e3       	ldi	r18, 0x3F	; 63
+ 3b8:	8d e0       	ldi	r24, 0x0D	; 13
+ 3ba:	93 e0       	ldi	r25, 0x03	; 3
+ 3bc:	21 50       	subi	r18, 0x01	; 1
+ 3be:	80 40       	sbci	r24, 0x00	; 0
+ 3c0:	90 40       	sbci	r25, 0x00	; 0
+ 3c2:	e1 f7       	brne	.-8      	; 0x3bc <main+0x2e4>
+ 3c4:	00 c0       	rjmp	.+0      	; 0x3c6 <main+0x2ee>
+ 3c6:	00 00       	nop
+					_delay_ms(1000);
+					command(0xC0);//force cursor to second line first position
+ 3c8:	80 ec       	ldi	r24, 0xC0	; 192
+ 3ca:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					lcd_print("1)3 2)4 3)2 4)5");
+ 3ce:	8f e0       	ldi	r24, 0x0F	; 15
+ 3d0:	91 e0       	ldi	r25, 0x01	; 1
+ 3d2:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+					while(door==4){//if i enter the correct answer 
+ 3d6:	50 c0       	rjmp	.+160    	; 0x478 <__EEPROM_REGION_LENGTH__+0x78>
+						if(PINA & (1<<0)){
+ 3d8:	c8 9b       	sbis	0x19, 0	; 25
+ 3da:	23 c0       	rjmp	.+70     	; 0x422 <__EEPROM_REGION_LENGTH__+0x22>
+							command(0x01);
+ 3dc:	81 e0       	ldi	r24, 0x01	; 1
+ 3de:	0e 94 41 00 	call	0x82	; 0x82 <command>
+							command(0x80);
+ 3e2:	80 e8       	ldi	r24, 0x80	; 128
+ 3e4:	0e 94 41 00 	call	0x82	; 0x82 <command>
+							lcd_print("correct answer");
+ 3e8:	8c e7       	ldi	r24, 0x7C	; 124
+ 3ea:	90 e0       	ldi	r25, 0x00	; 0
+ 3ec:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+							command(0xC0);
+ 3f0:	80 ec       	ldi	r24, 0xC0	; 192
+ 3f2:	0e 94 41 00 	call	0x82	; 0x82 <command>
+							lcd_print("opendoors 4");//displaying the open doors
+ 3f6:	8f e1       	ldi	r24, 0x1F	; 31
+ 3f8:	91 e0       	ldi	r25, 0x01	; 1
+ 3fa:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+							
+							attempts=0;
+							PORTA|=(1<<5);//related led to door4 is turned on (servo motor)
+ 3fe:	8b b3       	in	r24, 0x1b	; 27
+ 400:	80 62       	ori	r24, 0x20	; 32
+ 402:	8b bb       	out	0x1b, r24	; 27
+ 404:	2f e7       	ldi	r18, 0x7F	; 127
+ 406:	8a e1       	ldi	r24, 0x1A	; 26
+ 408:	96 e0       	ldi	r25, 0x06	; 6
+ 40a:	21 50       	subi	r18, 0x01	; 1
+ 40c:	80 40       	sbci	r24, 0x00	; 0
+ 40e:	90 40       	sbci	r25, 0x00	; 0
+ 410:	e1 f7       	brne	.-8      	; 0x40a <__EEPROM_REGION_LENGTH__+0xa>
+ 412:	00 c0       	rjmp	.+0      	; 0x414 <__EEPROM_REGION_LENGTH__+0x14>
+ 414:	00 00       	nop
+							_delay_ms(2000);
+							
+							command(0x01);
+ 416:	81 e0       	ldi	r24, 0x01	; 1
+ 418:	0e 94 41 00 	call	0x82	; 0x82 <command>
+							
+							door++;//increment doors to move to the second door
+ 41c:	cf 5f       	subi	r28, 0xFF	; 255
+							command(0x80);
+							lcd_print("correct answer");
+							command(0xC0);
+							lcd_print("opendoors 4");//displaying the open doors
+							
+							attempts=0;
+ 41e:	d0 e0       	ldi	r29, 0x00	; 0
+ 420:	2b c0       	rjmp	.+86     	; 0x478 <__EEPROM_REGION_LENGTH__+0x78>
+							door++;//increment doors to move to the second door
+							
+							
+							
+						}
+						else if (PINA & (1<<2)||PINA & (1<<3)||PINA& (1<<1)) {//in case entering wrong answers
+ 422:	ca 99       	sbic	0x19, 2	; 25
+ 424:	04 c0       	rjmp	.+8      	; 0x42e <__EEPROM_REGION_LENGTH__+0x2e>
+ 426:	cb 99       	sbic	0x19, 3	; 25
+ 428:	02 c0       	rjmp	.+4      	; 0x42e <__EEPROM_REGION_LENGTH__+0x2e>
+ 42a:	c9 9b       	sbis	0x19, 1	; 25
+ 42c:	25 c0       	rjmp	.+74     	; 0x478 <__EEPROM_REGION_LENGTH__+0x78>
+							attempts++;
+ 42e:	df 5f       	subi	r29, 0xFF	; 255
+							if(attempts >=3){//in case the attempts exceed the 3 then end the maze and leds turn off and back to the start of maze as in code
+ 430:	d3 30       	cpi	r29, 0x03	; 3
+ 432:	28 f1       	brcs	.+74     	; 0x47e <__EEPROM_REGION_LENGTH__+0x7e>
+								lockdoors();
+ 434:	0e 94 65 00 	call	0xca	; 0xca <lockdoors>
+								command(0x01);
+ 438:	81 e0       	ldi	r24, 0x01	; 1
+ 43a:	0e 94 41 00 	call	0x82	; 0x82 <command>
+								command(0x80);
+ 43e:	80 e8       	ldi	r24, 0x80	; 128
+ 440:	0e 94 41 00 	call	0x82	; 0x82 <command>
+								
+								lcd_print("Failed go to ");
+ 444:	87 e9       	ldi	r24, 0x97	; 151
+ 446:	90 e0       	ldi	r25, 0x00	; 0
+ 448:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+								command(0xC0);
+ 44c:	80 ec       	ldi	r24, 0xC0	; 192
+ 44e:	0e 94 41 00 	call	0x82	; 0x82 <command>
+								lcd_print("start of maze");
+ 452:	85 ea       	ldi	r24, 0xA5	; 165
+ 454:	90 e0       	ldi	r25, 0x00	; 0
+ 456:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+ 45a:	2f e3       	ldi	r18, 0x3F	; 63
+ 45c:	8d e0       	ldi	r24, 0x0D	; 13
+ 45e:	93 e0       	ldi	r25, 0x03	; 3
+ 460:	21 50       	subi	r18, 0x01	; 1
+ 462:	80 40       	sbci	r24, 0x00	; 0
+ 464:	90 40       	sbci	r25, 0x00	; 0
+ 466:	e1 f7       	brne	.-8      	; 0x460 <__EEPROM_REGION_LENGTH__+0x60>
+ 468:	00 c0       	rjmp	.+0      	; 0x46a <__EEPROM_REGION_LENGTH__+0x6a>
+ 46a:	00 00       	nop
+								_delay_ms(1000);
+								command(0x01);
+ 46c:	81 e0       	ldi	r24, 0x01	; 1
+ 46e:	0e 94 41 00 	call	0x82	; 0x82 <command>
+								attempts=0;
+								door=1;
+ 472:	c1 e0       	ldi	r28, 0x01	; 1
+								lcd_print("Failed go to ");
+								command(0xC0);
+								lcd_print("start of maze");
+								_delay_ms(1000);
+								command(0x01);
+								attempts=0;
+ 474:	d0 e0       	ldi	r29, 0x00	; 0
+								door=1;
+							break;}
+ 476:	03 c0       	rjmp	.+6      	; 0x47e <__EEPROM_REGION_LENGTH__+0x7e>
+					command(0x80);//force cursor to first line first position
+					lcd_print("Q4) 9 / 3 =");
+					_delay_ms(1000);
+					command(0xC0);//force cursor to second line first position
+					lcd_print("1)3 2)4 3)2 4)5");
+					while(door==4){//if i enter the correct answer 
+ 478:	c4 30       	cpi	r28, 0x04	; 4
+ 47a:	09 f4       	brne	.+2      	; 0x47e <__EEPROM_REGION_LENGTH__+0x7e>
+ 47c:	ad cf       	rjmp	.-166    	; 0x3d8 <main+0x300>
+					break;
+				}	}}	}	}
+														
+															
+															
+while(door==4){//all things related to door4
+ 47e:	c4 30       	cpi	r28, 0x04	; 4
+ 480:	09 f4       	brne	.+2      	; 0x484 <__EEPROM_REGION_LENGTH__+0x84>
+ 482:	90 cf       	rjmp	.-224    	; 0x3a4 <main+0x2cc>
+ 484:	6d c0       	rjmp	.+218    	; 0x560 <__EEPROM_REGION_LENGTH__+0x160>
+								break;
+							}	}}	}	}
+							
+																	
+while(door==5){//all things related to door5
+					if(PINB & (1<<4)){//if the related switch is press indicating to presence of object then display the related question
+ 486:	b4 9b       	sbis	0x16, 4	; 22
+ 488:	6b c0       	rjmp	.+214    	; 0x560 <__EEPROM_REGION_LENGTH__+0x160>
+					command(0x80);//force cursor to first line first position
+ 48a:	80 e8       	ldi	r24, 0x80	; 128
+ 48c:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					lcd_print("Q5) 10 % 5 =");
+ 490:	8b e2       	ldi	r24, 0x2B	; 43
+ 492:	91 e0       	ldi	r25, 0x01	; 1
+ 494:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+ 498:	2f e3       	ldi	r18, 0x3F	; 63
+ 49a:	8d e0       	ldi	r24, 0x0D	; 13
+ 49c:	93 e0       	ldi	r25, 0x03	; 3
+ 49e:	21 50       	subi	r18, 0x01	; 1
+ 4a0:	80 40       	sbci	r24, 0x00	; 0
+ 4a2:	90 40       	sbci	r25, 0x00	; 0
+ 4a4:	e1 f7       	brne	.-8      	; 0x49e <__EEPROM_REGION_LENGTH__+0x9e>
+ 4a6:	00 c0       	rjmp	.+0      	; 0x4a8 <__EEPROM_REGION_LENGTH__+0xa8>
+ 4a8:	00 00       	nop
+					_delay_ms(1000);
+					command(0xC0);//force cursor to second line first position
+ 4aa:	80 ec       	ldi	r24, 0xC0	; 192
+ 4ac:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					lcd_print("1)3 2)4 3)0 4)3");
+ 4b0:	88 e3       	ldi	r24, 0x38	; 56
+ 4b2:	91 e0       	ldi	r25, 0x01	; 1
+ 4b4:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+					while(door==5){
+ 4b8:	50 c0       	rjmp	.+160    	; 0x55a <__EEPROM_REGION_LENGTH__+0x15a>
+						if(PINA & (1<<2)){//if i enter the correct answer 
+ 4ba:	ca 9b       	sbis	0x19, 2	; 25
+ 4bc:	23 c0       	rjmp	.+70     	; 0x504 <__EEPROM_REGION_LENGTH__+0x104>
+							command(0x01);
+ 4be:	81 e0       	ldi	r24, 0x01	; 1
+ 4c0:	0e 94 41 00 	call	0x82	; 0x82 <command>
+							command(0x80);
+ 4c4:	80 e8       	ldi	r24, 0x80	; 128
+ 4c6:	0e 94 41 00 	call	0x82	; 0x82 <command>
+							lcd_print("correct answer");
+ 4ca:	8c e7       	ldi	r24, 0x7C	; 124
+ 4cc:	90 e0       	ldi	r25, 0x00	; 0
+ 4ce:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+							command(0xC0);
+ 4d2:	80 ec       	ldi	r24, 0xC0	; 192
+ 4d4:	0e 94 41 00 	call	0x82	; 0x82 <command>
+							lcd_print("opendoors 5");//displaying the open doors
+ 4d8:	88 e4       	ldi	r24, 0x48	; 72
+ 4da:	91 e0       	ldi	r25, 0x01	; 1
+ 4dc:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+							
+							attempts=0;
+							PORTA|=(1<<6);//related led to door5 is turned on (servo motor)
+ 4e0:	8b b3       	in	r24, 0x1b	; 27
+ 4e2:	80 64       	ori	r24, 0x40	; 64
+ 4e4:	8b bb       	out	0x1b, r24	; 27
+ 4e6:	2f e7       	ldi	r18, 0x7F	; 127
+ 4e8:	8a e1       	ldi	r24, 0x1A	; 26
+ 4ea:	96 e0       	ldi	r25, 0x06	; 6
+ 4ec:	21 50       	subi	r18, 0x01	; 1
+ 4ee:	80 40       	sbci	r24, 0x00	; 0
+ 4f0:	90 40       	sbci	r25, 0x00	; 0
+ 4f2:	e1 f7       	brne	.-8      	; 0x4ec <__EEPROM_REGION_LENGTH__+0xec>
+ 4f4:	00 c0       	rjmp	.+0      	; 0x4f6 <__EEPROM_REGION_LENGTH__+0xf6>
+ 4f6:	00 00       	nop
+							_delay_ms(2000);
+							
+							command(0x01);
+ 4f8:	81 e0       	ldi	r24, 0x01	; 1
+ 4fa:	0e 94 41 00 	call	0x82	; 0x82 <command>
+							
+							door++;//increment doors to move to the second door
+ 4fe:	cf 5f       	subi	r28, 0xFF	; 255
+							command(0x80);
+							lcd_print("correct answer");
+							command(0xC0);
+							lcd_print("opendoors 5");//displaying the open doors
+							
+							attempts=0;
+ 500:	d0 e0       	ldi	r29, 0x00	; 0
+ 502:	2b c0       	rjmp	.+86     	; 0x55a <__EEPROM_REGION_LENGTH__+0x15a>
+							door++;//increment doors to move to the second door
+							
+							
+							
+						}
+						else if (PINA & (1<<0)||PINA & (1<<3)||PINA& (1<<1)) {//in case entering wrong answers
+ 504:	c8 99       	sbic	0x19, 0	; 25
+ 506:	04 c0       	rjmp	.+8      	; 0x510 <__EEPROM_REGION_LENGTH__+0x110>
+ 508:	cb 99       	sbic	0x19, 3	; 25
+ 50a:	02 c0       	rjmp	.+4      	; 0x510 <__EEPROM_REGION_LENGTH__+0x110>
+ 50c:	c9 9b       	sbis	0x19, 1	; 25
+ 50e:	25 c0       	rjmp	.+74     	; 0x55a <__EEPROM_REGION_LENGTH__+0x15a>
+							attempts++;
+ 510:	df 5f       	subi	r29, 0xFF	; 255
+							if(attempts >=3){//in case the attempts exceed the 3 then end the maze and leds turn off and back to the start of maze as in code
+ 512:	d3 30       	cpi	r29, 0x03	; 3
+ 514:	28 f1       	brcs	.+74     	; 0x560 <__EEPROM_REGION_LENGTH__+0x160>
+								lockdoors();
+ 516:	0e 94 65 00 	call	0xca	; 0xca <lockdoors>
+								command(0x01);
+ 51a:	81 e0       	ldi	r24, 0x01	; 1
+ 51c:	0e 94 41 00 	call	0x82	; 0x82 <command>
+								command(0x80);
+ 520:	80 e8       	ldi	r24, 0x80	; 128
+ 522:	0e 94 41 00 	call	0x82	; 0x82 <command>
+								
+								lcd_print("Failed go to ");
+ 526:	87 e9       	ldi	r24, 0x97	; 151
+ 528:	90 e0       	ldi	r25, 0x00	; 0
+ 52a:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+								command(0xC0);
+ 52e:	80 ec       	ldi	r24, 0xC0	; 192
+ 530:	0e 94 41 00 	call	0x82	; 0x82 <command>
+								lcd_print("start of maze");
+ 534:	85 ea       	ldi	r24, 0xA5	; 165
+ 536:	90 e0       	ldi	r25, 0x00	; 0
+ 538:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+ 53c:	2f e3       	ldi	r18, 0x3F	; 63
+ 53e:	8d e0       	ldi	r24, 0x0D	; 13
+ 540:	93 e0       	ldi	r25, 0x03	; 3
+ 542:	21 50       	subi	r18, 0x01	; 1
+ 544:	80 40       	sbci	r24, 0x00	; 0
+ 546:	90 40       	sbci	r25, 0x00	; 0
+ 548:	e1 f7       	brne	.-8      	; 0x542 <__EEPROM_REGION_LENGTH__+0x142>
+ 54a:	00 c0       	rjmp	.+0      	; 0x54c <__EEPROM_REGION_LENGTH__+0x14c>
+ 54c:	00 00       	nop
+								_delay_ms(1000);
+								command(0x01);
+ 54e:	81 e0       	ldi	r24, 0x01	; 1
+ 550:	0e 94 41 00 	call	0x82	; 0x82 <command>
+								door=1;
+ 554:	c1 e0       	ldi	r28, 0x01	; 1
+								attempts=0;
+ 556:	d0 e0       	ldi	r29, 0x00	; 0
+							break;}
+ 558:	03 c0       	rjmp	.+6      	; 0x560 <__EEPROM_REGION_LENGTH__+0x160>
+					command(0x80);//force cursor to first line first position
+					lcd_print("Q5) 10 % 5 =");
+					_delay_ms(1000);
+					command(0xC0);//force cursor to second line first position
+					lcd_print("1)3 2)4 3)0 4)3");
+					while(door==5){
+ 55a:	c5 30       	cpi	r28, 0x05	; 5
+ 55c:	09 f4       	brne	.+2      	; 0x560 <__EEPROM_REGION_LENGTH__+0x160>
+ 55e:	ad cf       	rjmp	.-166    	; 0x4ba <__EEPROM_REGION_LENGTH__+0xba>
+							else{
+								break;
+							}	}}	}	}
+							
+																	
+while(door==5){//all things related to door5
+ 560:	c5 30       	cpi	r28, 0x05	; 5
+ 562:	09 f4       	brne	.+2      	; 0x566 <__EEPROM_REGION_LENGTH__+0x166>
+ 564:	90 cf       	rjmp	.-224    	; 0x486 <__EEPROM_REGION_LENGTH__+0x86>
+ 566:	7f c0       	rjmp	.+254    	; 0x666 <__EEPROM_REGION_LENGTH__+0x266>
+								break;
+							}	}}	}	}
+																								
+while(door==6){//all things related to door5
+				
+				if(PINB & (1<<5)){//if the related switch is press indicating to presence of object then display the related question
+ 568:	b5 9b       	sbis	0x16, 5	; 22
+ 56a:	7d c0       	rjmp	.+250    	; 0x666 <__EEPROM_REGION_LENGTH__+0x266>
+					command(0x80);//force cursor to first line first position
+ 56c:	80 e8       	ldi	r24, 0x80	; 128
+ 56e:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					lcd_print("Q6) 1 * 7=");
+ 572:	84 e5       	ldi	r24, 0x54	; 84
+ 574:	91 e0       	ldi	r25, 0x01	; 1
+ 576:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+ 57a:	2f e3       	ldi	r18, 0x3F	; 63
+ 57c:	8d e0       	ldi	r24, 0x0D	; 13
+ 57e:	93 e0       	ldi	r25, 0x03	; 3
+ 580:	21 50       	subi	r18, 0x01	; 1
+ 582:	80 40       	sbci	r24, 0x00	; 0
+ 584:	90 40       	sbci	r25, 0x00	; 0
+ 586:	e1 f7       	brne	.-8      	; 0x580 <__EEPROM_REGION_LENGTH__+0x180>
+ 588:	00 c0       	rjmp	.+0      	; 0x58a <__EEPROM_REGION_LENGTH__+0x18a>
+ 58a:	00 00       	nop
+					_delay_ms(1000);
+					command(0xC0);//force cursor to second line first position
+ 58c:	80 ec       	ldi	r24, 0xC0	; 192
+ 58e:	0e 94 41 00 	call	0x82	; 0x82 <command>
+					lcd_print("1)3 2)7 3)0 4)3");
+ 592:	8f e5       	ldi	r24, 0x5F	; 95
+ 594:	91 e0       	ldi	r25, 0x01	; 1
+ 596:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+					while(door==6){
+ 59a:	62 c0       	rjmp	.+196    	; 0x660 <__EEPROM_REGION_LENGTH__+0x260>
+						if(PINA & (1<<1)){//if i enter the correct answer 
+ 59c:	c9 9b       	sbis	0x19, 1	; 25
+ 59e:	36 c0       	rjmp	.+108    	; 0x60c <__EEPROM_REGION_LENGTH__+0x20c>
+							command(0x01);
+ 5a0:	81 e0       	ldi	r24, 0x01	; 1
+ 5a2:	0e 94 41 00 	call	0x82	; 0x82 <command>
+							command(0x80);
+ 5a6:	80 e8       	ldi	r24, 0x80	; 128
+ 5a8:	0e 94 41 00 	call	0x82	; 0x82 <command>
+							lcd_print("correct answer");
+ 5ac:	8c e7       	ldi	r24, 0x7C	; 124
+ 5ae:	90 e0       	ldi	r25, 0x00	; 0
+ 5b0:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+							command(0xC0);
+ 5b4:	80 ec       	ldi	r24, 0xC0	; 192
+ 5b6:	0e 94 41 00 	call	0x82	; 0x82 <command>
+							lcd_print("opendoors 6");//displaying the open doors
+ 5ba:	8f e6       	ldi	r24, 0x6F	; 111
+ 5bc:	91 e0       	ldi	r25, 0x01	; 1
+ 5be:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+							
+							attempts=0;
+							PORTA|=(1<<7);//related led to door6 is turned on (servo motor)
+ 5c2:	8b b3       	in	r24, 0x1b	; 27
+ 5c4:	80 68       	ori	r24, 0x80	; 128
+ 5c6:	8b bb       	out	0x1b, r24	; 27
+ 5c8:	2f e7       	ldi	r18, 0x7F	; 127
+ 5ca:	8a e1       	ldi	r24, 0x1A	; 26
+ 5cc:	96 e0       	ldi	r25, 0x06	; 6
+ 5ce:	21 50       	subi	r18, 0x01	; 1
+ 5d0:	80 40       	sbci	r24, 0x00	; 0
+ 5d2:	90 40       	sbci	r25, 0x00	; 0
+ 5d4:	e1 f7       	brne	.-8      	; 0x5ce <__EEPROM_REGION_LENGTH__+0x1ce>
+ 5d6:	00 c0       	rjmp	.+0      	; 0x5d8 <__EEPROM_REGION_LENGTH__+0x1d8>
+ 5d8:	00 00       	nop
+							_delay_ms(2000);
+							
+							
+							
+							command(0x01);
+ 5da:	81 e0       	ldi	r24, 0x01	; 1
+ 5dc:	0e 94 41 00 	call	0x82	; 0x82 <command>
+							lcd_print("congratulation!");//end of maze with success message
+ 5e0:	8b e7       	ldi	r24, 0x7B	; 123
+ 5e2:	91 e0       	ldi	r25, 0x01	; 1
+ 5e4:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+							command(0xC0);
+ 5e8:	80 ec       	ldi	r24, 0xC0	; 192
+ 5ea:	0e 94 41 00 	call	0x82	; 0x82 <command>
+							lcd_print("end of maze");
+ 5ee:	8b e8       	ldi	r24, 0x8B	; 139
+ 5f0:	91 e0       	ldi	r25, 0x01	; 1
+ 5f2:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+ 5f6:	2f e7       	ldi	r18, 0x7F	; 127
+ 5f8:	8a e1       	ldi	r24, 0x1A	; 26
+ 5fa:	96 e0       	ldi	r25, 0x06	; 6
+ 5fc:	21 50       	subi	r18, 0x01	; 1
+ 5fe:	80 40       	sbci	r24, 0x00	; 0
+ 600:	90 40       	sbci	r25, 0x00	; 0
+ 602:	e1 f7       	brne	.-8      	; 0x5fc <__EEPROM_REGION_LENGTH__+0x1fc>
+ 604:	00 c0       	rjmp	.+0      	; 0x606 <__EEPROM_REGION_LENGTH__+0x206>
+ 606:	00 00       	nop
+							command(0x80);
+							lcd_print("correct answer");
+							command(0xC0);
+							lcd_print("opendoors 6");//displaying the open doors
+							
+							attempts=0;
+ 608:	d0 e0       	ldi	r29, 0x00	; 0
+ 60a:	2a c0       	rjmp	.+84     	; 0x660 <__EEPROM_REGION_LENGTH__+0x260>
+							
+							
+							
+							
+						}
+						else if (PINA & (1<<0)||PINA & (1<<3)||PINA& (1<<2)) {//in case entering wrong answers
+ 60c:	c8 99       	sbic	0x19, 0	; 25
+ 60e:	04 c0       	rjmp	.+8      	; 0x618 <__EEPROM_REGION_LENGTH__+0x218>
+ 610:	cb 99       	sbic	0x19, 3	; 25
+ 612:	02 c0       	rjmp	.+4      	; 0x618 <__EEPROM_REGION_LENGTH__+0x218>
+ 614:	ca 9b       	sbis	0x19, 2	; 25
+ 616:	24 c0       	rjmp	.+72     	; 0x660 <__EEPROM_REGION_LENGTH__+0x260>
+							attempts++;
+ 618:	df 5f       	subi	r29, 0xFF	; 255
+							if(attempts >=3){//in case the attempts exceed the 3 then end the maze and leds turn off and back to the start of maze as in code
+ 61a:	d3 30       	cpi	r29, 0x03	; 3
+ 61c:	20 f1       	brcs	.+72     	; 0x666 <__EEPROM_REGION_LENGTH__+0x266>
+								lockdoors();
+ 61e:	0e 94 65 00 	call	0xca	; 0xca <lockdoors>
+								command(0x01);
+ 622:	81 e0       	ldi	r24, 0x01	; 1
+ 624:	0e 94 41 00 	call	0x82	; 0x82 <command>
+								command(0x80);
+ 628:	80 e8       	ldi	r24, 0x80	; 128
+ 62a:	0e 94 41 00 	call	0x82	; 0x82 <command>
+								
+								lcd_print("Failed go to ");
+ 62e:	87 e9       	ldi	r24, 0x97	; 151
+ 630:	90 e0       	ldi	r25, 0x00	; 0
+ 632:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+								command(0xC0);
+ 636:	80 ec       	ldi	r24, 0xC0	; 192
+ 638:	0e 94 41 00 	call	0x82	; 0x82 <command>
+								lcd_print("start of maze");
+ 63c:	85 ea       	ldi	r24, 0xA5	; 165
+ 63e:	90 e0       	ldi	r25, 0x00	; 0
+ 640:	0e 94 58 00 	call	0xb0	; 0xb0 <lcd_print>
+ 644:	2f e3       	ldi	r18, 0x3F	; 63
+ 646:	8d e0       	ldi	r24, 0x0D	; 13
+ 648:	93 e0       	ldi	r25, 0x03	; 3
+ 64a:	21 50       	subi	r18, 0x01	; 1
+ 64c:	80 40       	sbci	r24, 0x00	; 0
+ 64e:	90 40       	sbci	r25, 0x00	; 0
+ 650:	e1 f7       	brne	.-8      	; 0x64a <__EEPROM_REGION_LENGTH__+0x24a>
+ 652:	00 c0       	rjmp	.+0      	; 0x654 <__EEPROM_REGION_LENGTH__+0x254>
+ 654:	00 00       	nop
+								_delay_ms(1000);
+								command(0x01);
+ 656:	81 e0       	ldi	r24, 0x01	; 1
+ 658:	0e 94 41 00 	call	0x82	; 0x82 <command>
+								attempts=0;
+ 65c:	d0 e0       	ldi	r29, 0x00	; 0
+								
+							break;}
+ 65e:	03 c0       	rjmp	.+6      	; 0x666 <__EEPROM_REGION_LENGTH__+0x266>
+					command(0x80);//force cursor to first line first position
+					lcd_print("Q6) 1 * 7=");
+					_delay_ms(1000);
+					command(0xC0);//force cursor to second line first position
+					lcd_print("1)3 2)7 3)0 4)3");
+					while(door==6){
+ 660:	c6 30       	cpi	r28, 0x06	; 6
+ 662:	09 f4       	brne	.+2      	; 0x666 <__EEPROM_REGION_LENGTH__+0x266>
+ 664:	9b cf       	rjmp	.-202    	; 0x59c <__EEPROM_REGION_LENGTH__+0x19c>
+							break;}
+							else{
+								break;
+							}	}}	}	}
+																								
+while(door==6){//all things related to door5
+ 666:	c6 30       	cpi	r28, 0x06	; 6
+ 668:	09 f4       	brne	.+2      	; 0x66c <__EEPROM_REGION_LENGTH__+0x26c>
+ 66a:	7e cf       	rjmp	.-260    	; 0x568 <__EEPROM_REGION_LENGTH__+0x168>
+ 66c:	b5 cd       	rjmp	.-1174   	; 0x1d8 <main+0x100>
+
+0000066e <_exit>:
+ 66e:	f8 94       	cli
+
+00000670 <__stop_program>:
+ 670:	ff cf       	rjmp	.-2      	; 0x670 <__stop_program>
